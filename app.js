@@ -295,15 +295,18 @@ app.post("/admin/products/delete/:id", (req, res) => {
 });
 
 app.get("/admin/orders", (req, res) => {
+    const orders = db.prepare("SELECT * FROM orders ORDER BY id DESC").all();
 
-    const orders = db.prepare(`
-        SELECT * FROM orders
-        ORDER BY id DESC
-    `).all();
-
-    res.render("admin/orders", {
-        orders
+    orders.forEach(order => {
+        order.items = db.prepare(`
+            SELECT order_items.quantity, order_items.price, products.name
+            FROM order_items
+            JOIN products ON order_items.product_id = products.id
+            WHERE order_items.order_id = ?
+        `).all(order.id);
     });
+
+    res.render("admin/orders", { orders });
 });
 
 app.post("/admin/orders/status/:id", (req, res) => {
