@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Products - MobileHub</title>
+
+    <link rel="stylesheet" href="/css/tailwind.css">
+</head>
+
+<body class="bg-gray-100">
+
+<nav class="bg-gray-900 text-white px-6 py-4 flex justify-between items-center">
+    <h1 class="text-2xl font-bold">MobileHub</h1>
+
+    <div class="space-x-6">
+        <a href="/" class="hover:text-blue-400">Home</a>
+        <a href="/products" class="hover:text-blue-400">Products</a>
+        <a href="/cart" class="hover:text-blue-400">Cart</a>
+        <a href="/admin" class="hover:text-blue-400">Admin</a>
+    </div>
+</nav>
+
+<section class="py-12 px-6">
+
+    <h2 class="text-4xl font-bold text-center mb-10">
+        Our Products
+    </h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+
+        <% products.forEach(product => { %>
+
+            <div class="bg-white rounded-xl shadow-md p-6 hover:shadow-xl transition">
+
+                <h3 class="text-xl font-bold text-gray-900 mb-2">
+                    <%= product.name %>
+                </h3>
+
+                <p class="text-gray-600 mb-4">
+                    <%= product.description %>
+                </p>
+
+                <p class="text-2xl font-bold text-blue-600 mb-2">
+                    ₱<%= product.price.toLocaleString() %>
+                </p>
+
+                <p class="text-sm text-gray-500 mb-5">
+                    Stock: <%= product.stock %>
+                </p>
+
+                <a
+                    href="/product/<%= product.id %>"
+                    class="inline-block bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700"
+                >
+                    View Product
+                </a>
+
+            </div>
+
+        <% }) %>
+
+    </div>
+
+</section>
+
+</body>
+</html>

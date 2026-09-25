@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Orders - MobileHub</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+<nav>
+    <h1>MobileHub Admin</h1>
+
+    <div>
+        <a href="/">Store</a>
+        <a href="/admin">Dashboard</a>
+        <a href="/admin/orders">Orders</a>
+        
+</a>
+    </div>
+</nav>
+
+<div class="admin-container">
+
+    <h2>Customer Orders</h2>
+
+    <% if (orders.length === 0) { %>
+
+        <p>No orders yet.</p>
+
+    <% } else { %>
+
+        <% orders.forEach(order => { %>
+
+            <div class="order-card">
+
+                <h3>Order #<%= order.id %></h3>
+
+                <p>
+                    <strong>Customer:</strong>
+                    <%= order.customer_name %>
+                </p>
+
+                <p>
+                    <strong>Email:</strong>
+                    <%= order.customer_email %>
+                </p>
+
+                <p>
+                    <strong>Address:</strong>
+                    <%= order.address %>
+                </p>
+
+                <p>
+                    <strong>Total:</strong>
+                    ₱<%= order.total.toLocaleString() %>
+                </p>
+
+                <p>
+                    <strong>Status:</strong>
+                    <%= order.status %>
+                </p>
+
+                <form
+                    action="/admin/orders/status/<%= order.id %>"
+                    method="POST"
+                >
+
+                    <select name="status">
+
+                        <option
+                            value="Pending"
+                            <%= order.status === "Pending" ? "selected" : "" %>
+                        >
+                            Pending
+                        </option>
+
+                        <option
+                            value="Processing"
+                            <%= order.status === "Processing" ? "selected" : "" %>
+                        >
+                            Processing
+                        </option>
+
+                        <option
+                            value="Shipped"
+                            <%= order.status === "Shipped" ? "selected" : "" %>
+                        >
+                            Shipped
+                        </option>
+
+                        <option
+                            value="Completed"
+                            <%= order.status === "Completed" ? "selected" : "" %>
+                        >
+                            Completed
+                        </option>
+
+                    </select>
+
+                    <button type="submit" class="button">
+                        Update Status
+                    </button>
+
+                </form>
+
+            </div>
+
+        <% }) %>
+
+    <% } %>
+
+</div>
+
+</body>
+</html>
